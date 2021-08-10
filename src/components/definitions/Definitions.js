@@ -1,0 +1,56 @@
+import React from "react";
+import "./Definitions.css";
+
+const Definitions = ({ word, meanings, category, LightTheme }) => {
+  return (
+    <div className="meanings">
+      {/* audio---------------------------- */}
+      {meanings[0] && word && category === "en" && (
+        <audio
+          style={{
+            backgroundColor: LightTheme ? "white" : "#282c34",
+            borderRadius: 10,
+          }}
+          src={meanings[0].phonetics[0] && meanings[0].phonetics[0].audio}
+          controls
+        >
+          Your browser does not support the audio element.
+        </audio>
+      )}
+      {/* audio---------------------------- */}
+
+      {word === "" ? (
+        <span className="subTitle">Start by typing a word in search</span>
+      ) : (
+        meanings.map((mean) =>
+          mean.meanings.map((item) =>
+            item.definitions.map((def) => (
+              <div
+                className="singleMean"
+                style={{
+                  backgroundColor: LightTheme ? "#282c34" : "white",
+                  color: LightTheme ? "white" : "#282c34",
+                }}
+              >
+                <b>{def.definition}</b>
+                <hr style={{ backgroundColor: "black", width: "100%" }} />
+                {def.example && (
+                  <span>
+                    <b>Example :</b> {def.example}
+                  </span>
+                )}
+                {def.synonyms && (
+                  <span>
+                    <b>Synonyms :</b> {def.synonyms.map((s) => `${s}, `)}
+                  </span>
+                )}
+              </div>
+            ))
+          )
+        )
+      )}
+    </div>
+  );
+};
+
+export default Definitions;
